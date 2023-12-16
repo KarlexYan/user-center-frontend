@@ -3,18 +3,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
 import { useRef } from 'react';
 import {searchUser} from "@/services/ant-design-pro/api";
-import {Image} from "antd";
-export const waitTimePromise = async (time: number = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
 
-export const waitTime = async (time: number = 100) => {
-  await waitTimePromise(time);
-};
 
 
 
@@ -42,7 +31,6 @@ const columns: ProColumns<API.CurrentUser>[] = [
         <img src={record.avatarUrl} width="100px" height="100px"/>
       </div>
     ),
-    copyable: true,
   },
   {
     title: '用户年龄',
@@ -52,6 +40,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
     title: '用户性别',
     dataIndex: 'userGender',
     valueEnum:{
+      // 字段值转义
       1:{text:'男',status:'Success'},
       2:{text:'女',status:'Error'}
     }
@@ -70,6 +59,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
     title: '用户状态',
     dataIndex: 'userStatus',
     valueEnum:{
+      // 字段值转义
       0:{text:'正常',status:'Success'},
     }
   },
@@ -82,6 +72,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
     title: '用户角色',
     dataIndex: 'userRole',
     valueEnum:{
+      // 字段值转义
       0:{text:'普通用户',status:'Default'},
       1:{text:'管理员',status:'Success'}
     }
@@ -99,7 +90,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
       >
         编辑
       </a>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
+      <a href={record.avatarUrl} target="_blank" rel="noopener noreferrer" key="view">
         查看
       </a>,
       <TableDropdown
@@ -117,11 +108,13 @@ const columns: ProColumns<API.CurrentUser>[] = [
 export default () => {
   const actionRef = useRef<ActionType>();
 
+
   return (
     <ProTable<API.CurrentUser>
       columns={columns}
       actionRef={actionRef}
       cardBordered
+      // @ts-ignore
       request={async (params, sort, filter) => {
         console.log(sort, filter);
         const userList = await searchUser();
