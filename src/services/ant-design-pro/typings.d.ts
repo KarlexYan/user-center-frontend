@@ -2,6 +2,9 @@
 /* eslint-disable */
 
 declare namespace API {
+  /**
+   * 用户信息类
+   */
   type CurrentUser = {
     userId:number,
     userName?:string,
@@ -21,6 +24,16 @@ declare namespace API {
     type?: string;
     currentAuthority?: string;
   };
+
+  /**
+   * 通用返回类
+   */
+  type BaseResponse<T> = {
+    code: number,
+    data: T,
+    message: string,
+    description: string,
+  }
 
   type RegisterResult = number;
 
