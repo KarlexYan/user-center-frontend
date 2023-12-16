@@ -31,9 +31,9 @@ request.interceptors.request.use((url, options): any => {
  *  所以可以在拦截器统一解包 返回 res.data
  */
 request.interceptors.response.use(async (response,options): Promise<any> => {
-  const res = await response.clone().json();
+  const res = await response.clone().json(); // 将响应克隆，并转换成json格式
   if(res.code === 0){
-    return res.data
+    return res.data  // 解包返回
   }
 
   // 未登录
